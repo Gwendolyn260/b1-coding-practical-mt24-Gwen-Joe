@@ -76,9 +76,10 @@ class Mission:
     @classmethod
     def from_csv(cls, file_name: str):
         # You are required to implement this method
+        # pandas to extract the data into an array (return the array)
+        #am I allowed to straight up return something???
         pass
-
-
+        
 class ClosedLoop:
     def __init__(self, plant: Submarine, controller):
         self.plant = plant
@@ -98,8 +99,12 @@ class ClosedLoop:
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
             # Call your controller here
-            self.plant.transition(actions[t], disturbances[t])
+            #Gwen:
+            #I will have, the observed (actual) depth, and the reference depth at that time step
+            #this will feed into the controller
 
+            #Gwen: Needs to call the controller, and append the action to the actions array
+            self.plant.transition(actions[t], disturbances[t])
         return Trajectory(positions)
         
     def simulate_with_random_disturbances(self, mission: Mission, variance: float = 0.5) -> Trajectory:
