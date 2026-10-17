@@ -86,7 +86,7 @@ class Mission:
         cave_height = pd.read_csv(file_name,index_col="cave_height")
         cave_depth = pd.read_csv(file_name,index_col="cave_depth")
 
-        return(cls(reference,cave_height,cave_depth))
+        return cls(reference,cave_height,cave_depth)
 
         #pass 
         
@@ -111,7 +111,8 @@ class ClosedLoop:
             # Call your controller here
             mission_t = mission.reference[t]
             error = mission_t - observation_t
-            
+
+            actions[t] = controller(error) #need the controller!!
             #Gwen:
             #I will have, the observed (actual) depth, and the reference depth at that time step
             #this will feed into the controller
