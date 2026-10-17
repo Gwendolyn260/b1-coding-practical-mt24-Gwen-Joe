@@ -109,10 +109,11 @@ class ClosedLoop:
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
             # Call your controller here
-            mission_t = mission.reference[t]
-            error = mission_t - observation_t
+            reference_t = mission.reference[t]
+            
+            actions[t] = self.controller(self,reference_t,observation_t) #hopefully calls the controler
+            
 
-            actions[t] = controller(error) #need the controller!!
             #Gwen:
             #I will have, the observed (actual) depth, and the reference depth at that time step
             #this will feed into the controller
