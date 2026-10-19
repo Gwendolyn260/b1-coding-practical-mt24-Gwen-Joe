@@ -16,4 +16,4 @@ class PDController:
         error = reference - measurement
         action = self.kp * error + self.kd * (error - self.previous_error)
         self.previous_error = error
-        return cls(action)
+        return action
