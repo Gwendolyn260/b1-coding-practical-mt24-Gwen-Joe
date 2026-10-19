@@ -82,9 +82,10 @@ class Mission:
         #need to enter the folder
         #need to specify column/check if that works
 
-        reference = pd.read_csv(file_name,index_col="reference") #change the reference to our data
-        cave_height = pd.read_csv(file_name,index_col="cave_height")
-        cave_depth = pd.read_csv(file_name,index_col="cave_depth")
+        reference = np.array(pd.read_csv(file_name)["reference"]) #change the reference to our data
+        cave_height = np.array(pd.read_csv(file_name)["cave_height"])
+        cave_depth = np.array(pd.read_csv(file_name)["cave_depth"])
+
 
         return cls(reference,cave_height,cave_depth)
 
@@ -111,7 +112,7 @@ class ClosedLoop:
             # Call your controller here
             reference_t = mission.reference[t]
             
-            actions[t] = self.controller(self,reference_t,observation_t) #hopefully calls the controler
+            actions[t] = self.controller.compute_control(reference_t,observation_t) #hopefully calls the controler
             
 
             #Gwen:
