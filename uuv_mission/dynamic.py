@@ -77,11 +77,8 @@ class Mission:
     @classmethod
     def from_csv(cls, file_name: str):
         # You are required to implement this method
-        # pandas to extract the data into an array (return the array)
-        # am I allowed to straight up return something???
-        #need to enter the folder
-        #need to specify column/check if that works
-
+        
+        #read from the provided csv file the following variables (reference, cave_height, cave_depth)
         reference = np.array(pd.read_csv(file_name)["reference"]) #change the reference to our data
         cave_height = np.array(pd.read_csv(file_name)["cave_height"])
         cave_depth = np.array(pd.read_csv(file_name)["cave_depth"])
@@ -89,7 +86,6 @@ class Mission:
 
         return cls(reference,cave_height,cave_depth)
 
-        #pass 
         
 class ClosedLoop:
     def __init__(self, plant: Submarine, controller):
@@ -109,16 +105,12 @@ class ClosedLoop:
         for t in range(T):
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
+
             # Call your controller here
             reference_t = mission.reference[t]
-            
-            actions[t] = self.controller.compute_control(reference_t,observation_t) #hopefully calls the controler
-            
 
-            #Gwen:
-            #I will have, the observed (actual) depth, and the reference depth at that time step
-            #this will feed into the controller
-            #Gwen: Needs to call the controller, and append the action to the actions array
+            #pass reference(target trajectory) and actual position into the controller
+            actions[t] = self.controller.compute_control(reference_t,observation_t) # calls the controler
             
             
             self.plant.transition(actions[t], disturbances[t])
